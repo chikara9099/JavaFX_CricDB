@@ -1,0 +1,189 @@
+.dark-anchorpane {
+    -fx-background-color: #2c2c2c;
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+.text-field {
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #888888;
+}
+
+.button {
+    -fx-background-color: #444444;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 14px;
+}
+
+.dark-hbox, .dark-vbox {
+    -fx-background-color: #2c2c2c;
+}
+
+.table-view {
+    -fx-background-color: #2c2c2c;
+    -fx-control-inner-background: #242424;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #444444;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #000000;
+}
+
+.table-column {
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .scroll-bar:vertical {
+    -fx-background-color: #2c2c2c;
+}
+
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button,
+.table-view .scroll-bar:vertical .increment-arrow,
+.table-view .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #444444;
+    -fx-background-insets: 0;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+    -fx-background-insets: 2;
+    -fx-background-radius: 2;
+}
+
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: #333333;
+    -fx-background-insets: 1;
+    -fx-background-radius: 2;
+}
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: #2c2c2c;
+}
+
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button,
+.table-view .scroll-bar:horizontal .increment-arrow,
+.table-view .scroll-bar:horizontal .decrement-arrow {
+    -fx-background-color: #444444;
+    -fx-background-insets: 0;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #555555;
+    -fx-background-insets: 2;
+    -fx-background-radius: 2;
+}
+
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: #333333;
+    -fx-background-insets: 1;
+    -fx-background-radius: 2;
+}
+.combo-box {
+    -fx-background-color: #444444;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #2c2c2c;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #444444;
+    -fx-border-width: 0;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #555555;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #2c2c2c;
+}
+.combo-box .list-view .scroll-bar:vertical {
+    -fx-background-color: #2c2c2c;
+}
+
+.combo-box .list-view .scroll-bar:vertical .increment-button,
+.combo-box .list-view .scroll-bar:vertical .decrement-button,
+.combo-box .list-view .scroll-bar:vertical .increment-arrow,
+.combo-box .list-view .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #444444;
+    -fx-background-insets: 0;
+}
+
+.combo-box .list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+    -fx-background-insets: 2;
+    -fx-background-radius: 2;
+}
+
+.combo-box .list-view .scroll-bar:vertical .track {
+    -fx-background-color: #333333;
+    -fx-background-insets: 1;
+    -fx-background-radius: 2;
+}
+.combo-box .list-view .scroll-bar:horizontal {
+    -fx-background-color: #2c2c2c;
+}
+
+.combo-box .list-view .scroll-bar:horizontal .increment-button,
+.combo-box .list-view .scroll-bar:horizontal .decrement-button,
+.combo-box .list-view .scroll-bar:horizontal .increment-arrow,
+.combo-box .list-view .scroll-bar:horizontal .decrement-arrow {
+    -fx-background-color: #444444;
+    -fx-background-insets: 0;
+}
+
+.combo-box .list-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #555555;
+    -fx-background-insets: 2;
+    -fx-background-radius: 2;
+}
+
+.combo-box .list-view .scroll-bar:horizontal .track {
+    -fx-background-color: #333333;
+    -fx-background-insets: 1;
+    -fx-background-radius: 2;
+}
+.combo-box .arrow {
+    -fx-background-color: #ffffff;
+}
+
+.combo-box .arrow:hover {
+    -fx-background-color: #555555;
+}
+
+.slider {
+    -fx-background-color: #2c2c2c;
+}
+
+.slider .track {
+    -fx-background-color: #333333;
+    -fx-background-insets: 2;
+    -fx-background-radius: 2;
+}
+
+.slider .thumb {
+    -fx-background-color: #555555;
+    -fx-background-radius: 5px;
+}
+
+.slider .tick-mark {
+    -fx-stroke: #888888;
+}
+
+.slider .value-label {
+    -fx-text-fill: #ffffff;
+}
+
+

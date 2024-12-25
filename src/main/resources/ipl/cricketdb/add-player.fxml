@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" prefHeight="377.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipl.cricketdb.AddPlayerController" styleClass="dark-hbox">
+    <children>
+        <VBox alignment="CENTER" prefHeight="338.0" prefWidth="283.0" spacing="10" styleClass="dark-vbox">
+            <Label text="Add New Player" styleClass="label">
+                <font>
+                    <Font name="Berlin Sans FB" size="24.0" />
+                </font>
+            </Label>
+            <TextField fx:id="nameField" prefHeight="26.0" prefWidth="310.0" promptText="Name" styleClass="text-field" />
+            <TextField fx:id="countryField" promptText="Country" styleClass="text-field" />
+            <TextField fx:id="ageField" promptText="Age" styleClass="text-field" />
+            <TextField fx:id="heightField" promptText="Height" styleClass="text-field" />
+            <TextField fx:id="clubField" promptText="Club" styleClass="text-field" />
+            <TextField fx:id="positionField" promptText="Position" styleClass="text-field" />
+            <TextField fx:id="jerseyNumberField" promptText="Jersey Number" styleClass="text-field" />
+            <TextField fx:id="weeklySalaryField" promptText="Weekly Salary" styleClass="text-field" />
+            <Button onAction="#handleAddPlayer" prefHeight="3.0" prefWidth="100" styleClass="button" text="Add Player" />
+        </VBox>
+    </children>
+</HBox>

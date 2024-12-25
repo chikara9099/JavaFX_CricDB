@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="664.0" prefWidth="879.0" styleClass="dark-anchorpane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipl.cricketdb.ClubController">
+    <stylesheets>
+        <URL value="@main-styles.css" />
+    </stylesheets>
+    <children>
+        <Label fx:id="message" alignment="CENTER" layoutX="20.0" layoutY="10.0" prefHeight="40.0" prefWidth="839.0" styleClass="label">
+            <font>
+                <Font name="Berlin Sans FB" size="28.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameField" layoutX="160.0" layoutY="89.0" onAction="#search" prefHeight="50.0" prefWidth="239.0" promptText="Enter player name">
+            <font>
+                <Font size="14.0" />
+            </font></TextField>
+        <Button layoutX="20.0" layoutY="279.0" onAction="#showMarket" prefHeight="64.0" prefWidth="119.0" styleClass="button" text="Buy Player" />
+        <ComboBox fx:id="positionComboBox" layoutX="604.0" layoutY="59.0" onAction="#search" prefHeight="26.0" prefWidth="150.0" promptText="Select position" />
+        <ComboBox fx:id="countryComboBox" layoutX="432.0" layoutY="59.0" onAction="#search" prefHeight="26.0" prefWidth="150.0" promptText="Select country" />
+        <Label layoutX="432.0" layoutY="89.0" text="Salary Range (Min-Max)" />
+        <Slider fx:id="minSalarySlider" blockIncrement="100000.0" layoutX="432.0" layoutY="114.0" max="2.5E7" min="0" onDragDetected="#search" onDragDone="#search" onDragDropped="#search" onDragEntered="#search" onDragExited="#search" onDragOver="#search" prefHeight="38.0" prefWidth="196.0" showTickLabels="true" showTickMarks="true" />
+        <Slider fx:id="maxSalarySlider" blockIncrement="100000.0" layoutX="657.0" layoutY="108.0" max="2.5E7" min="0" onDragDetected="#search" onDragDone="#search" onDragDropped="#search" onDragEntered="#search" onDragExited="#search" onDragOver="#search" prefHeight="50.0" prefWidth="196.0" showTickLabels="true" showTickMarks="true" />
+
+        <TableView fx:id="playerTable" layoutX="160.0" layoutY="154.0" prefHeight="493.0" prefWidth="702.0" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="nameColumn" prefWidth="90.0" styleClass="table-column table-column-header-background" text="Name" />
+                <TableColumn fx:id="countryColumn" prefWidth="90.0" styleClass="table-column table-column-header-background" text="Country" />
+                <TableColumn fx:id="ageColumn" prefWidth="50.0" styleClass="table-column table-column-header-background" text="Age" />
+                <TableColumn fx:id="heightColumn" prefWidth="60.0" styleClass="table-column table-column-header-background" text="Height" />
+                <TableColumn fx:id="positionColumn" prefWidth="90.0" styleClass="table-column table-column-header-background" text="Position" />
+                <TableColumn fx:id="jerseyNumberColumn" prefWidth="90.0" styleClass="table-column table-column-header-background" text="Jersey no." />
+                <TableColumn fx:id="weeklySalaryColumn" prefWidth="162.4000244140625" styleClass="table-column table-column-header-background" text="Weekly Salary" />
+            <TableColumn fx:id="sellButtonColumn" prefWidth="65.5999755859375" styleClass="table-column table-column-header-background" text="Sell" />
+            </columns>
+        </TableView>
+        <Button layoutX="20.0" layoutY="600.0" onAction="#logout" prefHeight="40.0" prefWidth="119.0" styleClass="button" text="Logout" />
+      <Button layoutX="20.0" layoutY="518.0" onAction="#backToHome" prefHeight="64.0" prefWidth="119.0" styleClass="button" text="Back to Home" />
+      <Label layoutX="18.0" layoutY="140.0" prefHeight="50.0" prefWidth="123.0" text="Statistics">
+         <font>
+            <Font name="Eras Demi ITC" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="178.0" prefHeight="36.0" prefWidth="94.0" text="Max Age: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="200.0" prefHeight="36.0" prefWidth="94.0" text="Max Height: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="19.0" layoutY="218.0" prefHeight="40.0" prefWidth="78.0" text="Max Salary: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="236.0" prefHeight="50.0" prefWidth="104.0" text="Total Salary:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="maxAge" layoutX="80.0" layoutY="178.0" prefHeight="36.0" prefWidth="94.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="maxHeight" layoutX="92.0" layoutY="200.0" prefHeight="36.0" prefWidth="94.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="maxSalary" layoutX="92.0" layoutY="220.0" prefHeight="36.0" prefWidth="94.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalSalary" layoutX="92.0" layoutY="243.0" prefHeight="36.0" prefWidth="94.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
