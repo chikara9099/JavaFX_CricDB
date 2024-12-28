@@ -49,9 +49,7 @@ public class LoginController {
             socketWrapper.write("LOGIN");
             socketWrapper.write(userName);
             socketWrapper.write(password);
-
             String response = (String) socketWrapper.read();
-
             if ("SUCCESS".equals(response)) {
                 main.showHomePage(userName);
             } else {

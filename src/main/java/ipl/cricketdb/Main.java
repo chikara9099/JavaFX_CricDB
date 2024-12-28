@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private Stage stage;
+    static String userName;
+    private MainController controller;
     public static String getUserName() {
         return userName;
     }
-    static String userName;
-    private MainController controller;
     public Stage getStage() {
         return stage;
     }
@@ -39,6 +39,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public void showHomePage(String username) throws Exception {
         userName = username;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
@@ -51,6 +52,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public void showClubPage() throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("club-view.fxml"));
         Parent root = fxmlLoader.load();
@@ -62,6 +64,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public void showAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Incorrect Credentials");
@@ -69,6 +72,7 @@ public class Main extends Application {
         alert.setContentText("The username and password you provided is not correct.");
         alert.showAndWait();
     }
+
     public static void main(String[] args) {
         launch();
     }

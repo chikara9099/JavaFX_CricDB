@@ -1,27 +1,25 @@
-/* Dark theme for AnchorPane */
+
 .dark-anchorpane {
     -fx-background-color: #2c2c2c; /* Dark grey background */
 }
 
-/* Dark theme for Labels */
+
 .label {
     -fx-text-fill: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 50.0%, #42dc45 0.0%, #e2ff06 100.0%);
 }
 
-/* Dark theme for TextFields */
+
 .text-field, .password-field {
     -fx-background-color: #333333; /* Darker grey background */
     -fx-text-fill: #ffffff;        /* White text */
     -fx-prompt-text-fill: #888888; /* Grey prompt text */
 }
 
-/* Dark theme for Buttons */
 .button {
     -fx-background-color: #444444; /* Dark grey background */
     -fx-text-fill: #ffffff;        /* White text */
 }
 
-/* Dark theme for ButtonBar */
 .button-bar {
     -fx-background-color: #2c2c2c; /* Match AnchorPane background */
 }

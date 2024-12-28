@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -108,7 +109,14 @@ public class MarketController {
             @Override
             protected void succeeded() {
                 super.succeeded();
-                updateTable(getValue());
+                List<Player> updatedTransferList = getValue();
+                if(updatedTransferList != null) {
+                    updateTable(updatedTransferList);
+                }
+                else
+                {
+                    updateTable(Collections.emptyList());
+                }
             }
             @Override
             protected void failed() {
@@ -143,6 +151,8 @@ public class MarketController {
             @Override
             protected void succeeded() {
                 super.succeeded();
+                ObservableList<Player> players = playerTable.getItems();
+                players.remove(player);
                 fetchAndUpdateTransferList();
             }
             @Override

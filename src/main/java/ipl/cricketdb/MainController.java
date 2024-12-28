@@ -2,7 +2,6 @@ package ipl.cricketdb;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -114,29 +113,23 @@ public class MainController {
     @FXML
     private void search() {
         List<Player> results = playerManager.getPlayers();
-
         if (nameField.getText() != null && !nameField.getText().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getName(), nameField.getText())).collect(Collectors.toList());
         }
-
         if (positionComboBox.getValue() != null && !positionComboBox.getValue().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getPosition(), positionComboBox.getValue())).collect(Collectors.toList());
         }
-
         if (clubComboBox.getValue() != null && !clubComboBox.getValue().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getClub(), clubComboBox.getValue() )).collect(Collectors.toList());
         }
-
         if (countryComboBox.getValue() != null && !countryComboBox.getValue().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getCountry(), countryComboBox.getValue())).collect(Collectors.toList());
         }
-
         if (minSalarySlider.getValue() != 0 && maxSalarySlider.getValue() != 0) {
             double low = minSalarySlider.getValue();
             double high = maxSalarySlider.getValue();
             results = results.stream().filter(player -> player.getWeeklySalary() >= low && player.getWeeklySalary() <= high).collect(Collectors.toList());
         }
-
         updateTable(results);
     }
 
@@ -145,6 +138,7 @@ public class MainController {
         Matcher matcher = regex.matcher(text);
         return matcher.matches();
     }
+
     public void init(String msg) {
         message.setText(msg);
     }
@@ -153,6 +147,7 @@ public class MainController {
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
         playerTable.setItems(playerList);
     }
+
     @FXML
     private void showAddPlayerDialog() {
         try {
@@ -172,18 +167,22 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void showMyClubPage() throws Exception {
         mainApp.showClubPage();
     }
+
     public void addPlayer(Player newPlayer) throws Exception {
         playerManager.AddPlayer(newPlayer);
         playerManager.saveState("127.0.0.1",12345);
     }
+
     @FXML
     private void toggleRemovePlayer() {
         removePlayerTextField.setVisible(!removePlayerTextField.isVisible());
     }
+
     @FXML
     private void removePlayer() throws Exception {
         String playerName = removePlayerTextField.getText();
@@ -195,6 +194,7 @@ public class MainController {
             playerManager.saveState("127.0.0.1",12345);
         }
     }
+
     @FXML
     private void logout() throws Exception {
         if (scheduler != null && !scheduler.isShutdown()) {

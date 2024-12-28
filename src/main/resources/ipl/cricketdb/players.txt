@@ -48,5 +48,5 @@ Lockie Ferguson,New Zealand,33,1.85,Kolkata Knight Riders,Bowler,69,17500000
 Harshal Patel,India,33,1.75,Royal Challengers Bangalore,Bowler,,15000000
 Mustafizur Rahman,Bangladesh,29,1.8,Delhi Capitals,Bowler,90,14000000
 Litton Das,Bangladesh,30,1.7,Kolkata Knight Riders,Wicketkeeper,16,10000000
+Mokhles,Wakanda,25,1.9,Mumbai Indians,AllRounder,12,18000000
 Bodrul Johnson,Wakanda,24,1.9,Mumbai Indians,AllRounder,,16000000
-Mokhles,Wakanda,25,1.9,Punjab Kings,AllRounder,12,18000000

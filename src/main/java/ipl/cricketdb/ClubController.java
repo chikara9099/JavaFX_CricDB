@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
@@ -69,15 +68,18 @@ public class ClubController {
     private ImageView image;
     private Main mainApp;
     private ScheduledExecutorService scheduler;
+
     public void setMain(Main mainApp) {
         this.mainApp = mainApp;
     }
     public void init(String userName) {
-        message.setText(userName);
-        maxAge.setText(playerManager.maxClubAge(userName));
-        maxHeight.setText(playerManager.maxClubHeight(userName));
-        maxSalary.setText(playerManager.maxClubSalary(userName));
-        totalSalary.setText(playerManager.ClubYearlySalary(userName));
+        javafx.application.Platform.runLater(() -> {
+            message.setText(userName);
+            maxAge.setText(playerManager.maxClubAge(userName));
+            maxHeight.setText(playerManager.maxClubHeight(userName));
+            maxSalary.setText(playerManager.maxClubSalary(userName));
+            totalSalary.setText(playerManager.ClubYearlySalary(userName));
+        });
     }
     private String userName = Main.getUserName();
     @FXML
@@ -101,6 +103,7 @@ public class ClubController {
                     if (player != null) {
                         try {
                             sellPlayer(player);
+                            playerManager.fetchPlayersFromServer("127.0.0.1",12345);
                             List<Player> updatedPlayers = playerManager.searchByClub(userName);
                             updateTable(updatedPlayers);
                         } catch (Exception e) {
@@ -142,6 +145,7 @@ public class ClubController {
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 playerManager.fetchPlayersFromServer("127.0.0.1", 12345);
+                init(userName);
             } catch (Exception e) {
                 e.printStackTrace();
             }

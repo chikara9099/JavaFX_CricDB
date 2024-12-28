@@ -21,18 +21,19 @@ public class Server {
     private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     private static final String playerFilePath = "C:\\Users\\MSI\\Desktop\\Study\\CSE108\\CricketDB\\src\\main\\resources\\ipl\\cricketdb\\players.txt";
     private static final String credentialsFilePath = "C:\\Users\\MSI\\Desktop\\Study\\CSE108\\CricketDB\\src\\main\\resources\\ipl\\cricketdb\\credentials.txt";
+    private static final String transferListFilePath = "C:\\Users\\MSI\\Desktop\\Study\\CSE108\\CricketDB\\src\\main\\resources\\ipl\\cricketdb\\transferlist.txt";
     public Server(Map<String, String> userCredentials) {
         this.userCredentials = userCredentials;
         this.players = loadPlayersFromFile();
-        this.transferList = new ArrayList<>();
+        this.transferList = loadTransferListFromFile();
         startPeriodicPlayerRefresh();
+        startPeriodicTransferListRefresh();
     }
     public void transferPlayerToList(Player player) {
         lock.writeLock().lock();
         try {
-            players.remove(player);
             transferList.add(player);
-            savePlayers(players);
+            saveTransferList(transferList);
             System.out.println("Player " + player.getName() + " moved to transfer list.");
         } finally {
             lock.writeLock().unlock();
@@ -41,7 +42,7 @@ public class Server {
     public List<Player> getTransferList() {
         lock.readLock().lock();
         try {
-            return new ArrayList<>(transferList);
+            return transferList;
         } finally {
             lock.readLock().unlock();
         }
@@ -63,7 +64,7 @@ public class Server {
         Thread refreshThread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(5000); // Refresh every 5 seconds
+                    Thread.sleep(5000);
                     List<Player> updatedPlayers = loadPlayersFromFile();
                     lock.writeLock().lock();
                     try {
@@ -80,7 +81,27 @@ public class Server {
         refreshThread.setDaemon(true);
         refreshThread.start();
     }
-
+    private void startPeriodicTransferListRefresh() {
+        Thread refreshThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(5000);
+                    List<Player> updatedTransferList = loadTransferListFromFile();
+                    lock.writeLock().lock();
+                    try {
+                        this.transferList = updatedTransferList;
+                        System.out.println("Transfer list refreshed.");
+                    } finally {
+                        lock.writeLock().unlock();
+                    }
+                } catch (InterruptedException e) {
+                    System.err.println("Transfer list refresh interrupted.");
+                }
+            }
+        });
+        refreshThread.setDaemon(true);
+        refreshThread.start();
+    }
     public List<Player> getPlayers() {
         lock.readLock().lock();
         try {
@@ -103,7 +124,19 @@ public class Server {
             lock.writeLock().unlock();
         }
     }
-
+    public static void saveTransferList(List<Player> updatedTransferList) {
+        lock.writeLock().lock();
+        try {
+            FileIO file = new FileIO();
+            file.savePlayers(updatedTransferList, transferListFilePath);
+            transferList = updatedTransferList;
+            System.out.println("Transfer list updated and saved to file.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
     private List<Player> loadPlayersFromFile() {
         try {
             FileIO file = new FileIO();
@@ -113,7 +146,15 @@ public class Server {
             return List.of();
         }
     }
-
+    private List<Player> loadTransferListFromFile() {
+        try {
+            FileIO file = new FileIO();
+            return file.loadPlayers(transferListFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
     private static class ClientHandler implements Runnable {
         private Socket clientSocket;
         private Server server;
@@ -151,9 +192,11 @@ public class Server {
                     case "SELL_PLAYER":
                         Player playerToSell = (Player) socketWrapper.read();
                         players.remove(playerToSell);
-                        playerToSell.setClub(null);
+                        playerToSell.setClub("**On Sale**");
                         players.add(playerToSell);
                         server.transferPlayerToList(playerToSell);
+                        savePlayers(players);
+                        saveTransferList(transferList);
                         socketWrapper.write("Player transferred to transfer list.");
                         break;
 
@@ -175,6 +218,7 @@ public class Server {
                                 playerToBuy.setClub(buyerUsername);
                                 players.add(playerToBuy);
                                 savePlayers(players);
+                                saveTransferList(transferList);
                                 socketWrapper.write("Player bought successfully.");
                                 System.out.println("Player " + playerToBuy.getName() + " sold to " + buyerUsername);
                             } else {

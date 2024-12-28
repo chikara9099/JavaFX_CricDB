@@ -34,7 +34,6 @@ public class PlayerManager {
     public List<Player> getPlayers() {
         return players;
     }
-
     public Player searchPlayerByName(String playerName) {
         for(Player player : players) {
             if(player.getName().equalsIgnoreCase(playerName)) {
@@ -43,7 +42,6 @@ public class PlayerManager {
         }
         return null;
     }
-
     public List<Player> searchPlayerByPosition(String position) {
         List<Player> data = new ArrayList<>();
         for (Player player : players) {
@@ -53,7 +51,6 @@ public class PlayerManager {
         }
         return data;
     }
-
     public List<Player> searchPlayerBySalary(int low, int high) {
         List<Player> data = new ArrayList<>();
         for (Player player : players) {
@@ -81,9 +78,7 @@ public class PlayerManager {
         }
         return data;
     }
-
-    public void countryCount()
-    {
+    public void countryCount() {
         HashMap<String, Integer> count = new HashMap<>();
         for(Player player : players) {
             count.put(player.getCountry(), count.getOrDefault(player.getCountry(), 0) + 1);
@@ -129,8 +124,7 @@ public class PlayerManager {
         }
         return String.valueOf(weeklySalary);
     }
-    public void AddPlayer(Player player)
-    {
+    public void AddPlayer(Player player) {
         for(Player p : players) {
             if(p.getName().equalsIgnoreCase(player.getName())) {
                 System.err.println("Player with this name already exists");
@@ -148,7 +142,6 @@ public class PlayerManager {
             }
         }
     }
-
     public void saveState(String filename) throws Exception {
         file.savePlayers(players,filename);
     }
@@ -162,8 +155,7 @@ public class PlayerManager {
             throw new Exception("Failed to save new state", e);
         }
     }
-    public void sortOnSalary()
-    {
+    public void sortOnSalary() {
         Sorter sorter = new Sorter();
         players.sort(sorter);
     }
