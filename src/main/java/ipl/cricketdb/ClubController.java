@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,37 +25,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class ClubController {
-    @FXML
-    private TextField nameField;
-    @FXML
-    private ComboBox<String> positionComboBox;
-    @FXML
-    private ComboBox<String> countryComboBox;
-    @FXML
-    private Slider minSalarySlider;
-    @FXML
-    private Slider maxSalarySlider;
-    @FXML
-    private TableView<Player> playerTable;
-    @FXML
-    private TableColumn<Player, String> nameColumn;
-    @FXML
-    private TableColumn<Player, String> countryColumn;
-    @FXML
-    private TableColumn<Player, Integer> ageColumn;
-    @FXML
-    private TableColumn<Player, Double> heightColumn;
-    @FXML
-    private TableColumn<Player, String> positionColumn;
-    @FXML
-    private TableColumn<Player, Integer> jerseyNumberColumn;
-    @FXML
-    private TableColumn<Player, Integer> weeklySalaryColumn;
+public class ClubController extends BaseController{
     @FXML
     private TableColumn<Player, Void> sellButtonColumn;
-    @FXML
-    private Label message;
     @FXML
     private Label maxAge;
     @FXML
@@ -63,18 +36,13 @@ public class ClubController {
     private Label maxSalary;
     @FXML
     private Label totalSalary;
-    private PlayerManager playerManager;
-    @FXML
-    private ImageView image;
-    private Main mainApp;
-    private ScheduledExecutorService scheduler;
-
-    public void setMain(Main mainApp) {
-        this.mainApp = mainApp;
-    }
     public void init(String userName) {
+        message.setText(userName);
+        String imgLocation = userName.replace(" ","");
+        imgLocation = imgLocation.concat(".png");
+        Image img = new Image(Objects.requireNonNull(Main.class.getResourceAsStream(imgLocation)));
+        image.setImage(img);
         javafx.application.Platform.runLater(() -> {
-            message.setText(userName);
             maxAge.setText(playerManager.maxClubAge(userName));
             maxHeight.setText(playerManager.maxClubHeight(userName));
             maxSalary.setText(playerManager.maxClubSalary(userName));
@@ -103,7 +71,7 @@ public class ClubController {
                     if (player != null) {
                         try {
                             sellPlayer(player);
-                            playerManager.fetchPlayersFromServer("127.0.0.1",12345);
+                            playerManager.fetchPlayersFromServer(SERVER_ADDRESS,SERVER_PORT);
                             List<Player> updatedPlayers = playerManager.searchByClub(userName);
                             updateTable(updatedPlayers);
                         } catch (Exception e) {
@@ -123,7 +91,7 @@ public class ClubController {
             }
         });
         try {
-            playerManager = new PlayerManager("127.0.0.1",12345);
+            playerManager = new PlayerManager(SERVER_ADDRESS,SERVER_PORT);
             List<Player> clubPlayers = playerManager.searchByClub(userName);
             updateTable(clubPlayers);
             startAutoRefresh();
@@ -132,27 +100,21 @@ public class ClubController {
         }
         addListeners();
     }
-
-    private void addListeners() {
-        nameField.textProperty().addListener((observable, oldValue, newValue) -> search());
-        positionComboBox.valueProperty().addListener((observable, oldValue, newValue) -> search());
-        countryComboBox.valueProperty().addListener((observable, oldValue, newValue) -> search());
-        minSalarySlider.valueProperty().addListener((observable, oldValue, newValue) -> search());
-        maxSalarySlider.valueProperty().addListener((observable, oldValue, newValue) -> search());
-    }
-    private void startAutoRefresh() {
+    @Override
+    protected void startAutoRefresh() {
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                playerManager.fetchPlayersFromServer("127.0.0.1", 12345);
+                playerManager.fetchPlayersFromServer(SERVER_ADDRESS,SERVER_PORT);
                 init(userName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }, 0, 5, TimeUnit.SECONDS);
     }
+    @Override
     @FXML
-    private void search() {
+    protected void search() {
         List<Player> results = playerManager.searchByClub(userName);
         if (nameField.getText() != null && !nameField.getText().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getName(), nameField.getText())).collect(Collectors.toList());
@@ -160,35 +122,15 @@ public class ClubController {
         if (positionComboBox.getValue() != null && !positionComboBox.getValue().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getPosition(), positionComboBox.getValue())).collect(Collectors.toList());
         }
-
         if (countryComboBox.getValue() != null && !countryComboBox.getValue().isEmpty()) {
             results = results.stream().filter(player -> matches(player.getCountry(), countryComboBox.getValue())).collect(Collectors.toList());
         }
-
         if (minSalarySlider.getValue() != 0 && maxSalarySlider.getValue() != 0) {
             double low = minSalarySlider.getValue();
             double high = maxSalarySlider.getValue();
             results = results.stream().filter(player -> player.getWeeklySalary() >= low && player.getWeeklySalary() <= high).collect(Collectors.toList());
         }
-
         updateTable(results);
-    }
-
-    private boolean matches(String text, String pattern) {
-        Pattern regex = Pattern.compile(Pattern.quote(pattern) + ".*", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = regex.matcher(text);
-        return matcher.matches();
-    }
-    private void updateTable(List<Player> players) {
-        ObservableList<Player> playerList = FXCollections.observableArrayList(players);
-        playerTable.setItems(playerList);
-    }
-    @FXML
-    private void logout() throws Exception {
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdown();
-        }
-        mainApp.showLoginPage();
     }
     @FXML
     private void backToHome() throws Exception {
@@ -200,7 +142,7 @@ public class ClubController {
     @FXML
     private void sellPlayer(Player player) {
         try {
-            SocketWrapper socketWrapper = new SocketWrapper(new Socket("127.0.0.1", 12345));
+            SocketWrapper socketWrapper = new SocketWrapper(new Socket(SERVER_ADDRESS,SERVER_PORT));
             socketWrapper.write("SELL_PLAYER");
             socketWrapper.write(player);
             socketWrapper.write("Player sold and transferred to transfer list.");

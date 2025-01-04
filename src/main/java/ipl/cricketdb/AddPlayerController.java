@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import IPLDatabase.Player;
 
-public class AddPlayerController {
+public class AddPlayerController extends BaseController {
     @FXML
     private TextField nameField;
     @FXML
@@ -22,13 +22,6 @@ public class AddPlayerController {
     private TextField jerseyNumberField;
     @FXML
     private TextField weeklySalaryField;
-
-    private Main mainApp;
-
-    public void setMain(Main mainApp) {
-        this.mainApp = mainApp;
-    }
-
     @FXML
     private void handleAddPlayer() throws Exception {
         String name = nameField.getText();

@@ -10,7 +10,7 @@ module ipl.cricketdb {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires java.desktop;
+    requires com.fasterxml.jackson.databind;
 
     opens ipl.cricketdb to javafx.fxml;
     opens IPLDatabase to javafx.base;

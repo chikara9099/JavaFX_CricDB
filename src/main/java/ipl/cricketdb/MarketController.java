@@ -21,36 +21,12 @@ import javafx.concurrent.Task;
 
 import static ipl.cricketdb.Main.userName;
 
-public class MarketController {
-    @FXML
-    private TableView<Player> playerTable;
-    @FXML
-    private TableColumn<Player, String> nameColumn;
-    @FXML
-    private TableColumn<Player, String> countryColumn;
-    @FXML
-    private TableColumn<Player, Integer> ageColumn;
-    @FXML
-    private TableColumn<Player, Double> heightColumn;
-    @FXML
-    private TableColumn<Player, String> clubColumn;
-    @FXML
-    private TableColumn<Player, String> positionColumn;
-    @FXML
-    private TableColumn<Player, Integer> jerseyNumberColumn;
-    @FXML
-    private TableColumn<Player, Integer> weeklySalaryColumn;
+public class MarketController extends BaseController{
     @FXML
     private TableColumn<Player, Void> buyButtonColumn;
-
-    private Main main;
     private ScheduledExecutorService scheduler;
     private PlayerManager playerManager;
     private SocketWrapper socketWrapper;
-
-    public void setMain(Main mainApp) throws IOException, ClassNotFoundException {
-        this.main = mainApp;
-    }
 
     public void setPlayerManager(PlayerManager playerManager) {
         this.playerManager = playerManager;
@@ -59,7 +35,7 @@ public class MarketController {
     @FXML
     public void initialize() {
         try {
-            socketWrapper = new SocketWrapper(new Socket("127.0.0.1", 12345));
+            socketWrapper = new SocketWrapper(new Socket(SERVER_ADDRESS, SERVER_PORT));
             setupTableColumns();
             fetchAndUpdateTransferList();
             startAutoRefresh();
@@ -136,7 +112,7 @@ public class MarketController {
             @Override
             protected Void call() throws Exception {
                 try {
-                    SocketWrapper socka = new SocketWrapper(new Socket("127.0.0.1", 12345));
+                    SocketWrapper socka = new SocketWrapper(new Socket(SERVER_ADDRESS, SERVER_PORT));
                     System.out.println("Sending command BUY_PLAYER...");
                     socka.write("BUY_PLAYER");
                     System.out.println("Sending buyer username: " + userName);
@@ -165,13 +141,8 @@ public class MarketController {
         thread.setDaemon(true);
         thread.start();
     }
-
-    private void updateTable(List<Player> players) {
-        ObservableList<Player> playerList = FXCollections.observableArrayList(players);
-        playerTable.setItems(playerList);
-    }
-
-    private void startAutoRefresh() {
+    @Override
+    protected void startAutoRefresh() {
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> {
             try {

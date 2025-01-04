@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -91,5 +92,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <ImageView fx:id="image" fitHeight="142.0" fitWidth="142.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

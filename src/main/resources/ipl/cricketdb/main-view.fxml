@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -49,5 +50,6 @@
         </TableView>
         <Button layoutX="20.0" layoutY="600.0" onAction="#logout" prefHeight="40.0" prefWidth="119.0" styleClass="button" text="Logout" />
         <Button layoutX="20.0" layoutY="369.0" onAction="#showMyClubPage" prefHeight="64.0" prefWidth="119.0" styleClass="button" text="My Players" />
+      <ImageView fx:id="image" fitHeight="116.0" fitWidth="127.0" layoutX="16.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>
