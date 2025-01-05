@@ -7,8 +7,6 @@ import IPLDatabase.Player;
 
 public class AddPlayerController extends BaseController {
     @FXML
-    private TextField nameField;
-    @FXML
     private TextField countryField;
     @FXML
     private TextField ageField;

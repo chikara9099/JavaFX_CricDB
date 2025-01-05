@@ -23,7 +23,7 @@ public class LoginController extends BaseController {
         String userName = userText.getText();
         String password = passwordText.getText();
         try {
-            SocketWrapper socketWrapper = null;
+            socketWrapper = null;
             try {
                 socketWrapper = new SocketWrapper(SERVER_ADDRESS, SERVER_PORT);
             } catch (Exception e) {

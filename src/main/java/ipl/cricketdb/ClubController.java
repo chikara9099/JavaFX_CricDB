@@ -2,8 +2,8 @@ package ipl.cricketdb;
 
 import IPLDatabase.Operations.PlayerManager;
 import IPLDatabase.Player;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,18 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ClubController extends BaseController{
@@ -42,7 +37,7 @@ public class ClubController extends BaseController{
         imgLocation = imgLocation.concat(".png");
         Image img = new Image(Objects.requireNonNull(Main.class.getResourceAsStream(imgLocation)));
         image.setImage(img);
-        javafx.application.Platform.runLater(() -> {
+        Platform.runLater(() -> {
             maxAge.setText(playerManager.maxClubAge(userName));
             maxHeight.setText(playerManager.maxClubHeight(userName));
             maxSalary.setText(playerManager.maxClubSalary(userName));
@@ -73,7 +68,7 @@ public class ClubController extends BaseController{
                             sellPlayer(player);
                             playerManager.fetchPlayersFromServer(SERVER_ADDRESS,SERVER_PORT);
                             List<Player> updatedPlayers = playerManager.searchByClub(userName);
-                            updateTable(updatedPlayers);
+                            Platform.runLater(() -> updateTable(updatedPlayers));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -106,11 +101,11 @@ public class ClubController extends BaseController{
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 playerManager.fetchPlayersFromServer(SERVER_ADDRESS,SERVER_PORT);
-                init(userName);
+                Platform.runLater(() -> init(userName));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
     }
     @Override
     @FXML
@@ -142,7 +137,7 @@ public class ClubController extends BaseController{
     @FXML
     private void sellPlayer(Player player) {
         try {
-            SocketWrapper socketWrapper = new SocketWrapper(new Socket(SERVER_ADDRESS,SERVER_PORT));
+            socketWrapper = new SocketWrapper(SERVER_ADDRESS,SERVER_PORT);
             socketWrapper.write("SELL_PLAYER");
             socketWrapper.write(player);
             socketWrapper.write("Player sold and transferred to transfer list.");
@@ -151,6 +146,7 @@ public class ClubController extends BaseController{
             e.printStackTrace();
         }
     }
+
     @FXML
     private void showMarket() {
         try {

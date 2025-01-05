@@ -2,6 +2,7 @@ package ipl.cricketdb;
 
 import IPLDatabase.Operations.PlayerManager;
 import IPLDatabase.Player;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -57,6 +58,7 @@ public abstract class BaseController {
     protected Main mainApp;
     protected String SERVER_ADDRESS = "127.0.0.1";
     protected int SERVER_PORT = 12345;
+    protected SocketWrapper socketWrapper;
     public void setMain(Main mainApp){
         this.mainApp = mainApp;
     }
@@ -67,7 +69,11 @@ public abstract class BaseController {
     }
     protected void updateTable(List<Player> players) {
         ObservableList<Player> playerList = FXCollections.observableArrayList(players);
-        playerTable.setItems(playerList);
+        Platform.runLater(()->{
+            playerTable.getItems().clear();
+            playerTable.setItems(playerList);
+            playerTable.refresh();
+        });
     }
     @FXML
     protected void logout() throws Exception {
@@ -84,7 +90,7 @@ public abstract class BaseController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
     }
     protected void addListeners() {
         nameField.textProperty().addListener((observable, oldValue, newValue) -> search());

@@ -64,12 +64,12 @@ public class Server {
         Thread refreshThread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                     List<Player> updatedPlayers = loadPlayersFromFile();
                     lock.writeLock().lock();
                     try {
                         this.players = updatedPlayers;
-                        System.out.println("Player list refreshed.");
+                        //System.out.println("Player list refreshed.");
                     } finally {
                         lock.writeLock().unlock();
                     }
@@ -85,12 +85,12 @@ public class Server {
         Thread refreshThread = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                     List<Player> updatedTransferList = loadTransferListFromFile();
                     lock.writeLock().lock();
                     try {
                         this.transferList = updatedTransferList;
-                        System.out.println("Transfer list refreshed.");
+                        //System.out.println("Transfer list refreshed.");
                     } finally {
                         lock.writeLock().unlock();
                     }

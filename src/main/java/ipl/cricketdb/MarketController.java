@@ -2,20 +2,16 @@ package ipl.cricketdb;
 
 import IPLDatabase.Operations.PlayerManager;
 import IPLDatabase.Player;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.concurrent.Task;
 
@@ -24,10 +20,6 @@ import static ipl.cricketdb.Main.userName;
 public class MarketController extends BaseController{
     @FXML
     private TableColumn<Player, Void> buyButtonColumn;
-    private ScheduledExecutorService scheduler;
-    private PlayerManager playerManager;
-    private SocketWrapper socketWrapper;
-
     public void setPlayerManager(PlayerManager playerManager) {
         this.playerManager = playerManager;
     }
@@ -134,6 +126,10 @@ public class MarketController extends BaseController{
             @Override
             protected void failed() {
                 super.failed();
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to buy player. Please try again.");
+                    alert.showAndWait();
+                });
                 //e.printStackTrace();
             }
         };
@@ -150,7 +146,7 @@ public class MarketController extends BaseController{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
     }
 }
 

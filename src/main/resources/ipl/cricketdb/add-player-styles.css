@@ -1,44 +1,42 @@
-/* Dark theme for HBox and VBox */
 .dark-hbox, .dark-vbox {
-    -fx-background-color: #2c2c2c; /* Dark grey background */
+    -fx-background-color: #2c2c2c;
 }
 
-/* Dark theme for Labels */
 .label {
-    -fx-text-fill: #ffffff; /* White text */
+    -fx-text-fill: #ffffff;
 }
 
-/* Dark theme for TextFields */
+
 .text-field {
-    -fx-background-color: #333333; /* Darker grey background */
-    -fx-text-fill: #ffffff;        /* White text */
-    -fx-prompt-text-fill: #888888; /* Grey prompt text */
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #888888;
 }
 
-/* Dark theme for Buttons */
+
 .button {
-    -fx-background-color: #444444; /* Dark grey background */
-    -fx-text-fill: #ffffff;        /* White text */
-    -fx-border-color: #888888;     /* Grey border */
-    -fx-border-width: 1px;         /* Border width */
+    -fx-background-color: #444444;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #888888;
+    -fx-border-width: 1px;
 }
 
-/* Dark theme for Labels within VBox */
+
 .vbox > .label {
-    -fx-text-fill: #ffffff; /* White text */
+    -fx-text-fill: #ffffff;
 }
 
-/* Dark theme for TextFields within VBox */
+
 .vbox > .text-field {
-    -fx-background-color: #333333; /* Darker grey background */
-    -fx-text-fill: #ffffff;        /* White text */
-    -fx-prompt-text-fill: #888888; /* Grey prompt text */
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #888888;
 }
 
-/* Dark theme for Buttons within VBox */
+
 .vbox > .button {
-    -fx-background-color: #444444; /* Dark grey background */
-    -fx-text-fill: #ffffff;        /* White text */
-    -fx-border-color: #888888;     /* Grey border */
-    -fx-border-width: 1px;         /* Border width */
+    -fx-background-color: #444444;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #888888;
+    -fx-border-width: 1px;
 }
